@@ -97,6 +97,4 @@ class AccountController extends Controller
         Auth::logout();
         return redirect()->route('account.login');
     }
-
-
 }
