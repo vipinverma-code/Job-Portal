@@ -3,10 +3,6 @@
     <section class="section-5">
         <div class="container my-5">
             <div class="py-lg-2">&nbsp;</div>
-            @if (Session::has('success'))  
-            <div class="alert alert-success">
-                <p>{{ Session::get('success') }}</p></div>  
-            @endif
             <div class="row d-flex justify-content-center">
                 <div class="col-md-5">
                     <div class="card shadow border-0 p-5">

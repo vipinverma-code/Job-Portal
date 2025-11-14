@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 class AccountController extends Controller
 {
     // Show registration page
@@ -50,4 +52,51 @@ class AccountController extends Controller
     {
         return view('front.account.login');
     }
+    // Login Authentication Code 
+    public function authenticate(Request $request)
+    {
+        // Validation rules
+        $validator = Validator::make($request->all(), [
+            'email'    => 'required|email',
+            'password' => 'required'
+        ]);
+
+        // If validation fails
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        // Try to login using email and password
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            // Login successful
+            return response()->json([
+                'status'  => true,
+                'message' => "Login Successful!",
+                'redirect_url_profile' => route('account.profile')
+            ]);
+        } else {
+            // Wrong email or password
+            return response()->json([
+                'status' => false,
+                'errors' => [ 'email' => 'Invalid email or password.' ],
+                'redirect_url_login' => route('account.login')
+            ]);
+        }
+    }
+
+    // profile logic
+    public function profile(){
+        return view('front.account.profile');
+    }
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('account.login');
+    }
+
+
 }

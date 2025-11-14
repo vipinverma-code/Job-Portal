@@ -7,7 +7,8 @@
                 <div class="col-md-5">
                     <div class="card shadow border-0 p-5">
                         <h1 class="h3">Login</h1>
-                        <form action="" id="login_form">
+                        <form action="{{ route('account.login') }}" id="login_form">
+                            @csrf
                             <div class="mb-3">
                                 <label for="email" class="mb-2">Email*</label>
                                 <input type="text" name="email" id="email" class="form-control"
@@ -44,7 +45,7 @@
             $("p").removeClass('invalid-feedback').html('');
 
             $.ajax({
-                url: '{{ route('account.login') }}',
+                url: '{{ route('account.authenticate') }}',
                 type: 'post',
                 data: $("#login_form").serializeArray(),
                 dataType: 'json',
@@ -65,9 +66,12 @@
                                 .addClass('invalid-feedback')
                                 .html(errors.password);
                         }
+                        if(response.redirect_url_login){
+                            window.location.href= response.redirect_url_login;
+                        }
                     } else {
                         alert(response.message);
-                        window.location.href = "{{ route('home') }}";
+                        window.location.href = response.redirect_url_profile;
                     }
                 }
             });
