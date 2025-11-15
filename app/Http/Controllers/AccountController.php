@@ -31,7 +31,6 @@ class AccountController extends Controller
                 'password' => Hash::make($request->password),
             ]);
             // Use of session for storing the data
-
             $request->session()->put('user', $user);
 
 

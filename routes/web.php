@@ -15,3 +15,11 @@ Route::get('/account/login',[AccountController::class,'login'])->name('account.l
 Route::post('/account/login', [AccountController::class, 'authenticate'])->name('account.authenticate');
 Route::get('/account/profile',[AccountController::class,'profile'])->name('account.profile');
 Route::get('/account/logout',[AccountController::class,'logout'])->name('account.logout');  
+// Use of middleware
+Route::group(['account'],function(){
+    // Guest Route
+
+
+    // Authenticated Route
+
+});
