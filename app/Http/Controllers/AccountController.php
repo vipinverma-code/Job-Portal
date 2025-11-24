@@ -94,8 +94,9 @@ class AccountController extends Controller
         // dd($id);  
         $user=User::find($id);
           //dd means dump and die
-        dd($user);
-        return view('front.account.profile');
+        // dd($user);
+        return view('front.account.profile',['user'=>$user]);
+    
     }
     public function logout(){
         Auth::logout();
