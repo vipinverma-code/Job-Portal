@@ -90,6 +90,11 @@ class AccountController extends Controller
 
     // profile logic
     public function profile(){
+        $id= Auth::user()->id;
+        // dd($id);  
+        $user=User::find($id);
+          //dd means dump and die
+        dd($user);
         return view('front.account.profile');
     }
     public function logout(){
