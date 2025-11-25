@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+
 class AccountController extends Controller
 {
     // Show registration page
@@ -91,15 +92,50 @@ class AccountController extends Controller
     // profile logic
     public function profile(){
         $id= Auth::user()->id;
-        // dd($id);  
+    //   dd(Auth::user());
         $user=User::find($id);
           //dd means dump and die
-        // dd($user);
+       
         return view('front.account.profile',['user'=>$user]);
     
+    }
+    // update profile method
+    public function updateProfile(Request $request){
+
+        $id = Auth::user()->id;
+       
+        $validator = Validator::make($request->all(), [
+            'name'  => 'required|min:5|max:20',
+            'email' => 'required|email|unique:users,email,'.$id.',id'
+        ]);
+        if($validator->passes()){
+            $user=User::find($id);
+            $user->name=$request->name;
+            $user->email=$request->email;
+            $user->mobile=$request->mobile;
+            $user->designation=$request->designation;
+            $user->save();
+
+            return response()->json([
+                'status'=>true,
+                'errors' =>[],
+                'message'=>"User Profile Updated Successfully"
+            ]);
+        }else{
+             return response()->json([
+                'status'=>false,
+                'errors'=> $validator->errors()
+            ]);
+        }
+
+
+        
+
+      
     }
     public function logout(){
         Auth::logout();
         return redirect()->route('account.login');
     }
 }
+

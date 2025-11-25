@@ -18,8 +18,8 @@ Route::prefix('account')->group(function () {
 
     // Auth Routes
     Route::middleware('auth')->group(function () {
-        // Route::post('/login', [AccountController::class, 'authenticate'])->name('account.authenticate');
         Route::get('/profile', [AccountController::class, 'profile'])->name('account.profile');
+        Route::put('/updateProfile',[AccountController::class, 'updateProfile'])->name('account.updateProfile');
         Route::get('/logout', [AccountController::class, 'logout'])->name('account.logout');
     });
 });

@@ -13,11 +13,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+
+            // yahan pe rakho apne extra fields
+            $table->string('mobile')->nullable();
+            $table->string('designation')->nullable();
+            $table->string('image')->nullable();
+
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('image')->nullable();
-            $table->string('designation')->nullable();
-            $table->string('mobile');
             $table->rememberToken();
             $table->timestamps();
         });
