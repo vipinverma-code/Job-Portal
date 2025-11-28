@@ -128,14 +128,29 @@ class AccountController extends Controller
             ]);
         }
 
-
-        
-
       
     }
     public function logout(){
         Auth::logout();
         return redirect()->route('account.login');
+    }
+
+    public function updateProfilePic(Request $request){
+        // dd($request->all());
+        $validator= Validator::make($request->all(),[
+            'image'=>'required|image'
+        ]);
+
+        if($validator->passes()){
+
+        }else{
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+
+
     }
 }
 
